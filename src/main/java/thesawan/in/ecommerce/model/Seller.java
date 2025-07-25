@@ -1,0 +1,44 @@
+package thesawan.in.ecommerce.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import thesawan.in.ecommerce.domain.AccountStatus;
+import thesawan.in.ecommerce.domain.USER_ROLE;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+public class Seller {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String sellerName;
+    private String mobile;
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    private String password;
+
+    @Embedded
+    private BusinessDetails businessDetails = new BusinessDetails();
+
+    private BankDetails bankDetails = new BankDetails();
+
+    private Address pickupAddress = new Address();
+
+    private String GSTIN;
+
+    private USER_ROLE role;
+
+    private boolean isEmailVerified = false;
+
+    private AccountStatus accountStatus = AccountStatus.PENDING_VERIFICATION;
+
+
+}
