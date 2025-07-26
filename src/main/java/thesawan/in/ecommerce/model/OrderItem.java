@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class OrderItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
