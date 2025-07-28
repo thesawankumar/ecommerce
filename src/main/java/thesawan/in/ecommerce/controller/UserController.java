@@ -1,0 +1,26 @@
+package thesawan.in.ecommerce.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import thesawan.in.ecommerce.model.User;
+import thesawan.in.ecommerce.service.UserService;
+
+@RestController
+@RequestMapping("/users")
+@RequiredArgsConstructor
+public class UserController {
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/profile")
+    public ResponseEntity<User> createUserHandler(@RequestHeader("Authorization") String jwt) throws Exception {
+            User user = userService.findUserByJwtToken(jwt);
+            return ResponseEntity.ok(user);
+
+    }
+}
