@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import thesawan.in.ecommerce.domain.AccountStatus;
+import thesawan.in.ecommerce.exceptions.SellerException;
 import thesawan.in.ecommerce.model.Seller;
 import thesawan.in.ecommerce.model.VerificationCode;
 import thesawan.in.ecommerce.provider.JwtProvider;
@@ -95,7 +96,7 @@ public class SellerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Seller> getSellerById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<Seller> getSellerById(@PathVariable Long id) throws SellerException {
         Seller seller = sellerService.getSellerById(id);
         return new ResponseEntity<>(seller, HttpStatus.OK);
     }

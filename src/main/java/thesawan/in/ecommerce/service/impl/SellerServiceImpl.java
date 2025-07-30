@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import thesawan.in.ecommerce.domain.AccountStatus;
 import thesawan.in.ecommerce.domain.USER_ROLE;
+import thesawan.in.ecommerce.exceptions.SellerException;
 import thesawan.in.ecommerce.model.Address;
 import thesawan.in.ecommerce.model.Seller;
 import thesawan.in.ecommerce.provider.JwtProvider;
@@ -57,9 +58,9 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Seller getSellerById(Long id) throws Exception {
+    public Seller getSellerById(Long id) throws SellerException {
         return sellerRepository.findById(id).orElseThrow(
-                () -> new Exception("Seller not found with id: " + id));
+                () -> new SellerException("Seller not found with id: " + id));
     }
 
     @Override
@@ -89,9 +90,6 @@ public class SellerServiceImpl implements SellerService {
         if (seller.getEmail() != null) {
             existingSeller.setEmail(seller.getEmail());
         }
-//        if(seller.getPassword() != null) {
-//            existingSeller.setPassword(passwordEncoder.encode(seller.getPassword()));
-//        }
         if (seller.getPickupAddress() != null && seller.getPickupAddress().getAddress() != null
                 && seller.getPickupAddress().getCity() != null
                 && seller.getPickupAddress().getState() != null

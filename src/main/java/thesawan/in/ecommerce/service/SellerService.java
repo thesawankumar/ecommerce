@@ -2,6 +2,7 @@ package thesawan.in.ecommerce.service;
 
 import org.springframework.stereotype.Service;
 import thesawan.in.ecommerce.domain.AccountStatus;
+import thesawan.in.ecommerce.exceptions.SellerException;
 import thesawan.in.ecommerce.model.Seller;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface SellerService {
 
     Seller createSellerProfile(Seller seller) throws Exception;
 
-    Seller getSellerById(Long id) throws Exception;
+    Seller getSellerById(Long id) throws SellerException;
 
     Seller getSellerByEmail(String email) throws Exception;
 
