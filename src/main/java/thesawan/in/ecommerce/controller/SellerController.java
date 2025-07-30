@@ -23,16 +23,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/seller")
 public class SellerController {
-    @Autowired
-    private SellerService sellerService;
-    @Autowired
-    private VerificationCodeRepository verificationCodeRepository;
-    @Autowired
-    private AuthService authService;
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    private JwtProvider jwtProvider;
+
+    private final SellerService sellerService;
+    private final VerificationCodeRepository verificationCodeRepository;
+    private final AuthService authService;
+    private final EmailService emailService;
+    private final JwtProvider jwtProvider;
+
+    public SellerController(SellerService sellerService, VerificationCodeRepository verificationCodeRepository, AuthService authService, EmailService emailService, JwtProvider jwtProvider) {
+        this.sellerService = sellerService;
+        this.verificationCodeRepository = verificationCodeRepository;
+        this.authService = authService;
+        this.emailService = emailService;
+        this.jwtProvider = jwtProvider;
+    }
 
 
     @PostMapping("/login")
@@ -56,7 +60,7 @@ public class SellerController {
     }
 
     @PostMapping("/create-seller")
-    public ResponseEntity<Seller> createSellerProfile( @RequestBody Seller seller) throws Exception {
+    public ResponseEntity<Seller> createSellerProfile(@RequestBody Seller seller) throws Exception {
         Seller savedSeller = sellerService.createSellerProfile(seller);
         String otp = OtpUtil.generateOtp();
 
@@ -68,27 +72,27 @@ public class SellerController {
         String subject = "🔐 OTP for Seller Login Verification – TheSawan E-Commerce";
 
         String text = String.format("""
-        <div style="font-family: Arial, sans-serif; color: #333;">
-            <p>Hello Seller,</p>
-
-            <p>We received a request to log in to your <strong>Seller Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
-
-            <p>Please use the following One-Time Password (OTP) to proceed with the seller login:</p>
-
-            <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
-                %s
-            </h2>
-
-            <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Please do not share this code with anyone, even if they claim to be from our team.</p>
-
-            <p>If you did not initiate this login request, you can safely ignore this email.</p>
-
-            <br>
-
-            <p>Thanks & Regards,<br>
-            <strong>TheSawan E-Commerce Team</strong></p>
-        </div>
-        """, otp);
+                <div style="font-family: Arial, sans-serif; color: #333;">
+                    <p>Hello Seller,</p>
+                
+                    <p>We received a request to log in to your <strong>Seller Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
+                
+                    <p>Please use the following One-Time Password (OTP) to proceed with the seller login:</p>
+                
+                    <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
+                        %s
+                    </h2>
+                
+                    <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Please do not share this code with anyone, even if they claim to be from our team.</p>
+                
+                    <p>If you did not initiate this login request, you can safely ignore this email.</p>
+                
+                    <br>
+                
+                    <p>Thanks & Regards,<br>
+                    <strong>TheSawan E-Commerce Team</strong></p>
+                </div>
+                """, otp);
 
         String frontend_url = "http://localhost:3000/seller/verify-email/";
         emailService.sendVerificationOtpEmail(seller.getEmail(), verificationCode.getOtp(), subject, text + frontend_url);

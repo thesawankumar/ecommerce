@@ -1,5 +1,6 @@
 package thesawan.in.ecommerce.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,29 +33,18 @@ import java.util.Collection;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CartRepository cartRepository;
+    private final JwtProvider jwtProvider;
+    private final VerificationCodeRepository verificationCodeRepository;
+    private final EmailService emailService;
+    private final CustomUserServiceImpl customUserService;
+    private final SellerRepository sellerRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private CartRepository cartRepository;
-
-    @Autowired
-    private JwtProvider jwtProvider;
-    @Autowired
-    private VerificationCodeRepository verificationCodeRepository;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private CustomUserServiceImpl customUserService;
-
-    @Autowired
-    private SellerRepository sellerRepository;
 
     @Override
     public void sentLoginOtp(String email, USER_ROLE role) throws Exception {

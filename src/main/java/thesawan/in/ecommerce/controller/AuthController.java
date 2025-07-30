@@ -16,12 +16,8 @@ import thesawan.in.ecommerce.service.AuthService;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private AuthService authService;
+    private final UserRepository userRepository;
+    private final AuthService authService;
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignUpRequest req) throws Exception {

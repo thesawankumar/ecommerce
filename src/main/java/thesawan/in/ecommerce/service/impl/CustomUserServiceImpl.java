@@ -1,5 +1,6 @@
 package thesawan.in.ecommerce.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,14 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserServiceImpl implements UserDetailsService {
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private SellerRepository sellerRepository;
+    private final UserRepository userRepository;
+    private final SellerRepository sellerRepository;
 
     private static final String SELLER_PREFIX = "seller_";
+
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -43,6 +44,7 @@ public class CustomUserServiceImpl implements UserDetailsService {
         }
         throw new UsernameNotFoundException("User aur seller not found with this email:- " + username);
     }
+
     private UserDetails buildUserDetails(String email, String password, USER_ROLE role) {
         List<GrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority(role.toString()));

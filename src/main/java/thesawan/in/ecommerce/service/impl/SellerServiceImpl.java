@@ -1,5 +1,6 @@
 package thesawan.in.ecommerce.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,16 +17,13 @@ import thesawan.in.ecommerce.service.SellerService;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SellerServiceImpl implements SellerService {
 
-    @Autowired
-    private SellerRepository sellerRepository;
-    @Autowired
-    private JwtProvider jwtProvider;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private AddressRepository addressRepository;
+    private final SellerRepository sellerRepository;
+    private final JwtProvider jwtProvider;
+    private final PasswordEncoder passwordEncoder;
+    private final AddressRepository addressRepository;
 
 
     @Override

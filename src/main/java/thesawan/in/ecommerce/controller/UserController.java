@@ -14,8 +14,7 @@ import thesawan.in.ecommerce.service.UserService;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/profile")
     public ResponseEntity<User> createUserHandler(@RequestHeader("Authorization") String jwt) throws Exception {

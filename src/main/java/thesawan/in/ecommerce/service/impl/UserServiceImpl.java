@@ -1,5 +1,6 @@
 package thesawan.in.ecommerce.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import thesawan.in.ecommerce.model.User;
@@ -8,11 +9,10 @@ import thesawan.in.ecommerce.repository.UserRepository;
 import thesawan.in.ecommerce.service.UserService;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
+    private UserRepository userRepository;
     private JwtProvider jwtProvider;
 
     @Override
