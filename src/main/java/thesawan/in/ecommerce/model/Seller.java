@@ -1,15 +1,13 @@
 package thesawan.in.ecommerce.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import thesawan.in.ecommerce.domain.AccountStatus;
 import thesawan.in.ecommerce.domain.USER_ROLE;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode

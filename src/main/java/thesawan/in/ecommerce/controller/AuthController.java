@@ -8,12 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import thesawan.in.ecommerce.domain.USER_ROLE;
-import thesawan.in.ecommerce.model.VerificationCode;
 import thesawan.in.ecommerce.repository.UserRepository;
-import thesawan.in.ecommerce.response.ApiResponse;
-import thesawan.in.ecommerce.response.AuthResponse;
-import thesawan.in.ecommerce.response.LoginRequest;
-import thesawan.in.ecommerce.response.SignUpRequest;
+import thesawan.in.ecommerce.response.*;
 import thesawan.in.ecommerce.service.AuthService;
 
 @RestController
@@ -39,8 +35,9 @@ public class AuthController {
     }
 
     @PostMapping("/sent-otp")
-    public ResponseEntity<ApiResponse> sendOtpHandler(@RequestBody VerificationCode req) throws Exception {
-        authService.sentLoginOtp(req.getEmail());
+    public ResponseEntity<ApiResponse> sendOtpHandler(@RequestBody LoginOtpRequest req) throws Exception {
+        authService.sentLoginOtp(req.getEmail(), req.getRole());
+
         ApiResponse res = new ApiResponse();
         res.setMessage("Otp Sent Successfully :)..");
         return ResponseEntity.ok(res);

@@ -19,6 +19,7 @@ public class Address {
 
     private String name;
     private String locality;
+    private String city;
     private String address;
     private String state;
     private String pinCode;

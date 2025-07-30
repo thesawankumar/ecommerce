@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
     public User findUserByJwtToken(String jwt) throws Exception {
         String email = jwtProvider.getEmailFromJwtToken(jwt);
         return this.findUserByEmail(email);
-
     }
 
     @Override
