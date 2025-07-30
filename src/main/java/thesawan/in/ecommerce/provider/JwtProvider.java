@@ -22,9 +22,10 @@ public class JwtProvider {
     public String generateToken(Authentication auth) {
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
         String roles = populateAuthorities(authorities);
+        Date now = new Date();
         return Jwts.builder()
-                .issuedAt(new Date())
-                .expiration(new Date(new Date().getTime() + 864000))
+                .issuedAt(now)
+                .expiration(new Date(now.getTime() + 1000 * 60 * 60)) // 1 hour expiry
                 .claim("email", auth.getName())
                 .claim("authorities", roles)
                 .signWith(key)

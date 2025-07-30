@@ -88,50 +88,44 @@ public class AuthServiceImpl implements AuthService {
         if (role == USER_ROLE.ROLE_SELLER) {
             subject = "🔐 OTP for Seller Login Verification – TheSawan E-Commerce";
 
+            String frontend_url = "http://localhost:3000/seller/verify-email/";
+            String verifyLink = frontend_url + otp;
+
             text = String.format("""
-                <div style="font-family: Arial, sans-serif; color: #333;">
-                    <p>Hello Seller,</p>
-
-                    <p>We received a request to log in to your <strong>Seller Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
-
-                    <p>Please use the following One-Time Password (OTP) to proceed:</p>
-
-                    <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
-                        %s
-                    </h2>
-
-                    <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Do not share this code with anyone.</p>
-
-                    <p>If you did not initiate this request, you can safely ignore this email.</p>
-
-                    <br>
-                    <p>Thanks & Regards,<br><strong>TheSawan E-Commerce Team</strong></p>
-                </div>
-                """, otp);
+            <div style="font-family: Arial, sans-serif; color: #333;">
+                <p>Hello Seller,</p>
+                <p>We received a request to log in to your <strong>Seller Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
+                <p>Please use the following One-Time Password (OTP) to proceed:</p>
+                <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
+                    %s
+                </h2>
+                <p>You can also click the link below to verify:</p>
+                <p><a href="%s">%s</a></p>
+                <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Do not share this code with anyone.</p>
+                <p>If you did not initiate this request, you can safely ignore this email.</p>
+                <br>
+                <p>Thanks & Regards,<br><strong>TheSawan E-Commerce Team</strong></p>
+            </div>
+            """, otp, verifyLink, verifyLink);
         } else {
             subject = "🔐 OTP for Customer Login Verification – TheSawan E-Commerce";
 
             text = String.format("""
-                <div style="font-family: Arial, sans-serif; color: #333;">
-                    <p>Hello,User</p>
-
-                    <p>We received a request to log in to your <strong>Customer Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
-
-                    <p>Please use the following One-Time Password (OTP) to continue:</p>
-
-                    <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
-                        %s
-                    </h2>
-
-                    <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Keep it confidential.</p>
-
-                    <p>If you did not initiate this request, please ignore this email.</p>
-
-                    <br>
-                    <p>Thanks & Regards,<br><strong>TheSawan E-Commerce Team</strong></p>
-                </div>
-                """, otp);
+            <div style="font-family: Arial, sans-serif; color: #333;">
+                <p>Hello, User</p>
+                <p>We received a request to log in to your <strong>Customer Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
+                <p>Please use the following One-Time Password (OTP) to continue:</p>
+                <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
+                    %s
+                </h2>
+                <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Keep it confidential.</p>
+                <p>If you did not initiate this request, please ignore this email.</p>
+                <br>
+                <p>Thanks & Regards,<br><strong>TheSawan E-Commerce Team</strong></p>
+            </div>
+            """, otp);
         }
+
 
         // Send Email
         emailService.sendVerificationOtpEmail(email, otp, subject, text);
