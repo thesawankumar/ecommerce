@@ -65,30 +65,31 @@ public class SellerController {
         verificationCode.setEmail(seller.getEmail());
         verificationCodeRepository.save(verificationCode);
 
-        String subject = "🔐 Your One-Time Password (OTP) for Login Verification";
+        String subject = "🔐 OTP for Seller Login Verification – TheSawan E-Commerce";
 
         String text = String.format("""
-                <div style="font-family: Arial, sans-serif; color: #333;">
-                    <p>Hello,</p>
-                
-                    <p>We received a request to log in to your account on <strong>TheSawan E-Commerce App</strong>.</p>
-                
-                    <p>Please use the following One-Time Password (OTP) to proceed:</p>
-                
-                    <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
-                        %s
-                    </h2>
-                
-                    <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Do not share this code with anyone.</p>
-                
-                    <p>If you did not initiate this request, you can safely ignore this email.</p>
-                
-                    <br>
-                
-                    <p>Thanks & Regards,<br>
-                    <strong>TheSawan E-Commerce Team</strong></p>
-                </div>
-                """, otp);
+        <div style="font-family: Arial, sans-serif; color: #333;">
+            <p>Hello Seller,</p>
+
+            <p>We received a request to log in to your <strong>Seller Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
+
+            <p>Please use the following One-Time Password (OTP) to proceed with the seller login:</p>
+
+            <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
+                %s
+            </h2>
+
+            <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Please do not share this code with anyone, even if they claim to be from our team.</p>
+
+            <p>If you did not initiate this login request, you can safely ignore this email.</p>
+
+            <br>
+
+            <p>Thanks & Regards,<br>
+            <strong>TheSawan E-Commerce Team</strong></p>
+        </div>
+        """, otp);
+
         String frontend_url = "http://localhost:3000/seller/verify-email/";
         emailService.sendVerificationOtpEmail(seller.getEmail(), verificationCode.getOtp(), subject, text + frontend_url);
         return new ResponseEntity<>(savedSeller, HttpStatus.CREATED);
