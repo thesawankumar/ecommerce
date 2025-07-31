@@ -121,7 +121,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> searchProducts(String query) {
-        
         return productRepository.searchProduct(query);
     }
 

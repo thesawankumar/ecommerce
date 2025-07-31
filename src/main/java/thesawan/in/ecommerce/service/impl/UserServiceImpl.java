@@ -12,8 +12,9 @@ import thesawan.in.ecommerce.service.UserService;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private JwtProvider jwtProvider;
+    private final UserRepository userRepository;
+
+    private final JwtProvider jwtProvider;
 
     @Override
     public User findUserByJwtToken(String jwt) throws Exception {

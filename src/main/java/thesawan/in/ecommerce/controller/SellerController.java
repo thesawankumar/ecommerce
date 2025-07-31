@@ -50,48 +50,12 @@ public class SellerController {
         }
         Seller seller = sellerService.verifyEmail(verificationCode.getEmail(), otp);
         return new ResponseEntity<>(seller, HttpStatus.OK);
-
     }
 
     @PostMapping("/create-seller")
     public ResponseEntity<Seller> createSellerProfile(@RequestBody Seller seller) throws Exception {
         Seller savedSeller = sellerService.createSellerProfile(seller);
-//        String otp = OtpUtil.generateOtp();
-//
-//        VerificationCode verificationCode = new VerificationCode();
-//        verificationCode.setOtp(otp);
-//        verificationCode.setEmail(seller.getEmail());
-//        verificationCodeRepository.save(verificationCode);
-//
-//        String subject = "🔐 OTP for Seller Login Verification – TheSawan E-Commerce";
-//
-//        String text = String.format("""
-//                <div style="font-family: Arial, sans-serif; color: #333;">
-//                    <p>Hello Seller,</p>
-//
-//                    <p>We received a request to log in to your <strong>Seller Account</strong> on <strong>TheSawan E-Commerce App</strong>.</p>
-//
-//                    <p>Please use the following One-Time Password (OTP) to proceed with the seller login:</p>
-//
-//                    <h2 style="background: #f2f2f2; padding: 10px; border-radius: 5px; display: inline-block; color: #2c3e50;">
-//                        %s
-//                    </h2>
-//
-//                    <p style="margin-top: 20px;">🔒 <strong>Note:</strong> This OTP is valid for <strong>10 minutes</strong>. Please do not share this code with anyone, even if they claim to be from our team.</p>
-//
-//                    <p>If you did not initiate this login request, you can safely ignore this email.</p>
-//
-//                    <br>
-//
-//                    <p>Thanks & Regards,<br>
-//                    <strong>TheSawan E-Commerce Team</strong></p>
-//                </div>
-//                """, otp);
-//
-//        String frontend_url = "http://localhost:3000/seller/verify-email/";
-//        emailService.sendVerificationOtpEmail(seller.getEmail(), verificationCode.getOtp(), subject, text + frontend_url);
         return new ResponseEntity<>(savedSeller, HttpStatus.CREATED);
-
     }
 
     @GetMapping("/{id}")
