@@ -11,7 +11,7 @@ import thesawan.in.ecommerce.model.User;
 import thesawan.in.ecommerce.service.UserService;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;

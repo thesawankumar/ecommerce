@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.*;
 import thesawan.in.ecommerce.domain.AccountStatus;
 import thesawan.in.ecommerce.exceptions.SellerException;
 import thesawan.in.ecommerce.model.Seller;
+import thesawan.in.ecommerce.model.SellerReport;
 import thesawan.in.ecommerce.model.VerificationCode;
 import thesawan.in.ecommerce.provider.JwtProvider;
 import thesawan.in.ecommerce.repository.VerificationCodeRepository;
-import thesawan.in.ecommerce.response.ApiResponse;
 import thesawan.in.ecommerce.response.AuthResponse;
 import thesawan.in.ecommerce.response.LoginRequest;
 import thesawan.in.ecommerce.service.AuthService;
 import thesawan.in.ecommerce.service.EmailService;
+import thesawan.in.ecommerce.service.SellerReportService;
 import thesawan.in.ecommerce.service.SellerService;
-import thesawan.in.ecommerce.utils.OtpUtil;
+
 
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class SellerController {
     private final SellerService sellerService;
     private final VerificationCodeRepository verificationCodeRepository;
     private final AuthService authService;
-    private final EmailService emailService;
     private final JwtProvider jwtProvider;
+    private final SellerReportService sellerReportService;
 
 
     @PostMapping("/login")
@@ -69,6 +70,14 @@ public class SellerController {
         String email = jwtProvider.getEmailFromJwtToken(jwt);
         Seller seller = sellerService.getSellerByEmail(email);
         return new ResponseEntity<>(seller, HttpStatus.OK);
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<SellerReport> getSellerReport(@RequestHeader("Authorization") String jwt) throws Exception {
+        // Validate JWT and get seller profile
+        Seller seller = sellerService.getSellerProfile(jwt);
+        SellerReport sellerReport = sellerReportService.getSellerReport(seller);
+        return new ResponseEntity<>(sellerReport, HttpStatus.OK);
     }
 
     @GetMapping("/sellers")

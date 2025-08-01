@@ -17,7 +17,7 @@ import thesawan.in.ecommerce.service.UserService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/carts")
+@RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
     private final CartItemService cartItemService;
