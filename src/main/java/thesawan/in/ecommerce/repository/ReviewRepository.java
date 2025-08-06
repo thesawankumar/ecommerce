@@ -6,6 +6,6 @@ import thesawan.in.ecommerce.model.Review;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review,Long> {
-    List<Review> findByProductid(Long productId);
+    List<Review> findByProductId(Long productId);
 
 }

@@ -61,7 +61,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public Coupon findCCouponById(Long id) throws Exception {
+    public Coupon findCouponById(Long id) throws Exception {
         return couponRepository.findById(id)
                 .orElseThrow(() -> new Exception("Coupon not found with id: " + id));
     }
@@ -80,7 +80,7 @@ public class CouponServiceImpl implements CouponService {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteCoupon(Long id) throws Exception {
-        findCCouponById(id);
+        findCouponById(id);
         couponRepository.deleteById(id);
     }
 }

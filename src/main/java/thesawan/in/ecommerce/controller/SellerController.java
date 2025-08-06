@@ -80,7 +80,7 @@ public class SellerController {
         return new ResponseEntity<>(sellerReport, HttpStatus.OK);
     }
 
-    @GetMapping("/sellers")
+    @GetMapping("/all")
     public ResponseEntity<List<Seller>> getAllSellers(@RequestParam(required = false) AccountStatus status) {
         List<Seller> sellers = sellerService.getAllSellers(status);
         return new ResponseEntity<>(sellers, HttpStatus.OK);

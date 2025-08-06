@@ -11,7 +11,7 @@ public interface CouponService {
 
     Cart removeCouponFromCart(String code, User user) throws Exception;
 
-    Coupon findCCouponById(Long id) throws Exception;
+    Coupon findCouponById(Long id) throws Exception;
 
     Coupon createCoupon(Coupon coupon);
 

@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService {
+
     private final ReviewRepository reviewRepository;
 
     @Override
@@ -30,7 +31,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getReviewsByProductId(Long productId) {
-        return reviewRepository.findByProductid(productId);
+        return reviewRepository.findByProductId(productId);
     }
 
     @Override
