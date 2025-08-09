@@ -58,10 +58,10 @@ public class CartController {
                                                           @RequestBody CartItem cartItem) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
         CartItem updatedCartItem = null;
-        if (cartItem.getQuantity() <= 0) {
-            throw new Exception("Quantity must be greater than zero");
-        }
-        updatedCartItem = cartItemService.updateCartItem(user.getId(), cartItemId, cartItem);
+      if(cartItem.getQuantity()>0){
+          updatedCartItem = cartItemService.updateCartItem(user.getId(), cartItemId, cartItem);
+      }
+
         return new ResponseEntity<>(updatedCartItem, HttpStatus.ACCEPTED);
     }
 }

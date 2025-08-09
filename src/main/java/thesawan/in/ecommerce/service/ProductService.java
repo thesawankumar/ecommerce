@@ -10,7 +10,7 @@ import thesawan.in.ecommerce.response.createProductRequest;
 import java.util.List;
 
 public interface ProductService {
-    public Product createProduct(createProductRequest req, Seller seller);
+    public Product createProduct(createProductRequest req, Seller seller) throws Exception;
 
     public void deleteProduct(Long productId) throws ProductException;
 

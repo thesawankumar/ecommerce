@@ -29,9 +29,9 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
-    public Category createOrFetchCategory(String categoryId, int level, Category parentCategory) {
+    public Category createOrFetchCategory(String categoryId, int level, Category parentCategory) throws Exception {
         if (categoryId == null || categoryId.isBlank()) {
-            throw new IllegalArgumentException("Category ID must not be null or blank");
+            throw new Exception("Category ID must not be null or blank");
         }
 
         Category category = categoryRepository.findByCategoryId(categoryId);
@@ -46,32 +46,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product createProduct(createProductRequest req, Seller seller) {
-//        Category category1 = categoryRepository.findByCategoryId(req.getCategory());
-//        if (category1 == null) {
-//            Category category = new Category();
-//            category.setCategoryId(req.getCategory());
-//            category.setLevel(1);
-//            category1 = categoryRepository.save(category);
-//        }
-//        Category category2 = categoryRepository.findByCategoryId(req.getCategory2());
-//        if (category2 == null) {
-//            Category category = new Category();
-//            category.setCategoryId(req.getCategory2());
-//            category.setLevel(2);
-//            category.setParentCategory(category1);
-//            category2 = categoryRepository.save(category);
-//        }
-//        Category category3 = categoryRepository.findByCategoryId(req.getCategory3());
-//        if (category3 == null) {
-//            Category category = new Category();
-//            category.setCategoryId(req.getCategory3());
-//            category.setLevel(3);
-//            category.setParentCategory(category2);
-//            category3 = categoryRepository.save(category);
-//        }
-        Category category1 = createOrFetchCategory(req.getCategory(), 1, null);
-        Category category2 = createOrFetchCategory(req.getCategory2(), 2, category1);
+    public Product createProduct(createProductRequest req, Seller seller) throws Exception {
+
+        Category category = createOrFetchCategory(req.getCategory(), 1, null);
+        Category category2 = createOrFetchCategory(req.getCategory2(), 2, category);
         Category category3 = createOrFetchCategory(req.getCategory3(), 3, category2);
 
         int discountPercentage = calculateDiscountPercentage(req.getMrpPrice(), req.getSellingPrice());
@@ -126,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAllProducts(String category, String brand,
-                                        String colors, String sizes,
+                                        String color, String sizes,
                                         Integer minPrice, Integer maxPrice,
                                         Integer minDiscount, String sort,
                                         String stock, Integer pageNumber) {
@@ -138,8 +116,8 @@ public class ProductServiceImpl implements ProductService {
                 predicates.add(criteriaBuilder.equal(categoryJoin.get("categoryId"), category));
 
             }
-            if (colors != null && !colors.isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("color"), colors));
+            if (color != null && !color.isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("color"), color));
             }
             if (sizes != null && !sizes.isEmpty()) {
                 predicates.add(criteriaBuilder.equal(root.get("sizes"), sizes));
@@ -162,13 +140,13 @@ public class ProductServiceImpl implements ProductService {
         if (sort != null && !sort.isEmpty()) {
             pageable = switch (sort) {
                 case "price_low" ->
-                        PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.by("sellingPrice").ascending());
+                        PageRequest.of(pageNumber != null ? pageNumber : 0, 8, Sort.by("sellingPrice").ascending());
                 case "price_high" ->
-                        PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.by("sellingPrice").descending());
-                default -> PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.unsorted());
+                        PageRequest.of(pageNumber != null ? pageNumber : 0, 8, Sort.by("sellingPrice").descending());
+                default -> PageRequest.of(pageNumber != null ? pageNumber : 0, 8, Sort.unsorted());
             };
         } else {
-            pageable = PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.unsorted());
+            pageable = PageRequest.of(pageNumber != null ? pageNumber : 0, 8, Sort.unsorted());
         }
         return productRepository.findAll(spec, pageable);
     }

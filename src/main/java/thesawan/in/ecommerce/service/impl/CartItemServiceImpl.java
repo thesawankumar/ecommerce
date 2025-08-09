@@ -13,18 +13,20 @@ import thesawan.in.ecommerce.service.CartService;
 public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
 
+
     @Override
     public CartItem updateCartItem(Long userId, Long id, CartItem cartItem) throws Exception {
         CartItem item = findCartItemById(id);
         User cartItemUser = item.getCart().getUser();
         if (cartItemUser.getId().equals(userId)) {
-            item.setQuantity(item.getQuantity() + cartItem.getQuantity());
+            // Directly set quantity from request
+            item.setQuantity(cartItem.getQuantity());
+
             item.setSellingPrice(item.getQuantity() * item.getProduct().getSellingPrice());
             item.setMrpPrice(item.getQuantity() * item.getProduct().getMrpPrice());
             return cartItemRepository.save(item);
         }
         throw new Exception("You are not authorized to update this cart item");
-
     }
 
     @Override

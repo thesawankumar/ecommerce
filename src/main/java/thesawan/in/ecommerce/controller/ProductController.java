@@ -34,7 +34,7 @@ public class ProductController {
     public ResponseEntity<Page<Product>> getAllProducts(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String brand,
-            @RequestParam(required = false) String colors,
+            @RequestParam(required = false) String color,
             @RequestParam(required = false) String sizes,
             @RequestParam(required = false) Integer minPrice,
             @RequestParam(required = false) Integer maxPrice,
@@ -43,7 +43,7 @@ public class ProductController {
             @RequestParam(required = false) String stock,
             @RequestParam(defaultValue = "0") Integer pageNumber
     ) {
-        Page<Product> products = productService.getAllProducts(category, brand, colors, sizes, minPrice, maxPrice, minDiscount, sort, stock, pageNumber);
+        Page<Product> products = productService.getAllProducts(category, brand, color, sizes, minPrice, maxPrice, minDiscount, sort, stock, pageNumber);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 }
