@@ -11,6 +11,7 @@ import com.stripe.param.checkout.SessionCreateParams;
 
 import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import thesawan.in.ecommerce.domain.PaymentOrderStatus;
 import thesawan.in.ecommerce.domain.PaymentStatus;
@@ -30,10 +31,11 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentOrderRepository paymentOrderRepository;
     private final OrderRepository orderRepository;
 
-    private String apiKey = "apiKey";
-    private String apiSecret = "apiSecret";
-    private String stripeApiKey = "stripeApiKey";
-    private String stripeApiSecret = "stripeApiSecret";
+    @Value("${razorpay.api.key}")
+    private String apiKey;
+    @Value("${razorpay.api.secret}")
+    private String apiSecret;
+//    private String stripeSecretKey;
 
     @Override
     public PaymentOrder createPaymentOrder(User user, Set<Order> orders) {
@@ -105,7 +107,7 @@ public class PaymentServiceImpl implements PaymentService {
             notify.put("email", true);
             paymentLinkRequest.put("notify", notify);
 
-            paymentLinkRequest.put("callback_url", "http://local:3000.com/payment-success" + orderId);
+            paymentLinkRequest.put("callback_url", "http://localhost:5173/payment/success" + orderId);
             paymentLinkRequest.put("callback_method", "get");
 
             PaymentLink paymentLink = razorpay.paymentLink.create(paymentLinkRequest);
@@ -119,30 +121,30 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
-    @Override
-    public String createStripePaymentLink(User user, Long amount, Long orderId) throws StripeException {
-        Stripe.apiKey = stripeApiKey;
-        SessionCreateParams params = SessionCreateParams.builder()
-                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
-                .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl("http://localhost:3000/payment-success/" + orderId)
-                .setCancelUrl("http://localhost:3000/payment-failure/" + orderId)
-                .addLineItem(
-                        SessionCreateParams.LineItem.builder()
-                                .setQuantity(1L)
-                                .setPriceData(
-                                        SessionCreateParams.LineItem.PriceData.builder()
-                                                .setCurrency("INR")
-                                                .setUnitAmount(amount * 100) // Stripe expects amount in cents
-                                                .setProductData(
-                                                        SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                                .setName("TheSawan Ecommerce Order #" + orderId)
-                                                                .build()
-                                                ).build()
-                                ).build()
-                ).build();
-        // Implement Stripe payment link creation logic here
-        Session session = Session.create(params);
-        return session.getUrl();
-    }
+//    @Override
+//    public String createStripePaymentLink(User user, Long amount, Long orderId) throws StripeException {
+//        Stripe.apiKey = stripeSecretKey;
+//        SessionCreateParams params = SessionCreateParams.builder()
+//                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+//                .setMode(SessionCreateParams.Mode.PAYMENT)
+//                .setSuccessUrl("http://localhost:3000/payment-success/" + orderId)
+//                .setCancelUrl("http://localhost:3000/payment-failure/" + orderId)
+//                .addLineItem(
+//                        SessionCreateParams.LineItem.builder()
+//                                .setQuantity(1L)
+//                                .setPriceData(
+//                                        SessionCreateParams.LineItem.PriceData.builder()
+//                                                .setCurrency("INR")
+//                                                .setUnitAmount(amount * 100) // Stripe expects amount in cents
+//                                                .setProductData(
+//                                                        SessionCreateParams.LineItem.PriceData.ProductData.builder()
+//                                                                .setName("TheSawan Ecommerce Order #" + orderId)
+//                                                                .build()
+//                                                ).build()
+//                                ).build()
+//                ).build();
+//        // Implement Stripe payment link creation logic here
+//        Session session = Session.create(params);
+//        return session.getUrl();
+//    }
 }
