@@ -70,9 +70,16 @@ public class SellerServiceImpl implements SellerService {
         return seller;
     }
 
+
     @Override
     public List<Seller> getAllSellers(AccountStatus status) {
-        return sellerRepository.findAllByAccountStatus(status);
+        if (status == null) {
+            return sellerRepository.findAll();
+        }
+        // Filter by enum properly
+        return sellerRepository.findAll().stream()
+                .filter(s -> s.getAccountStatus() == status)
+                .toList();
     }
 
     @Override
@@ -129,6 +136,7 @@ public class SellerServiceImpl implements SellerService {
         return sellerRepository.save(seller);
 
     }
+
 
     @Override
     public Seller updateSellerAccountStatus(Long sellerId, AccountStatus status) throws Exception {
