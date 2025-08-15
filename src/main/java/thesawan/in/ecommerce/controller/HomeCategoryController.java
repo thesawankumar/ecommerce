@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/home-category")
+@RequestMapping("/admin/home-category")
 public class HomeCategoryController {
     private final HomeCategoryService homeCategoryService;
     private final HomeService homeService;
@@ -25,13 +25,13 @@ public class HomeCategoryController {
         return new ResponseEntity<>(home, HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/admin/get-all")
+    @GetMapping("/get-all")
     public ResponseEntity<List<HomeCategory>> getHomeCategory() {
         List<HomeCategory> categories = homeCategoryService.findAllHomeCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
-    @PatchMapping("/admin/update/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<HomeCategory> updateHomeCategory(@RequestBody HomeCategory homeCategory, @PathVariable Long id) throws Exception {
         HomeCategory updatedCategory = homeCategoryService.updateHomeCategory(homeCategory, id);
         return new ResponseEntity<>(updatedCategory, HttpStatus.ACCEPTED);

@@ -23,9 +23,9 @@ public class DealServiceImpl implements DealService {
     }
 
     @Override
-    public Deal createDeal(Deal deal) {
+    public Deal createDeal(Deal deal) throws Exception {
         HomeCategory category = homeCategoryRepository.findById(deal.getCategory().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                .orElseThrow(() -> new Exception("Category not found"));
         Deal newDeal = dealRepository.save(deal);
         newDeal.setCategory(category);
         newDeal.setDiscount(deal.getDiscount());

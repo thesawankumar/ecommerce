@@ -38,9 +38,11 @@ public class HomeServiceImpl implements HomeService {
         List<Deal> createdDeals = new ArrayList<>();
 
         if (dealRepository.findAll().isEmpty()) {
-            allCategories.stream().filter(category -> category.getSection() == HomeCategorySection.DEALS)
+            List<Deal> deals = allCategories.stream().filter(category -> category.getSection() == HomeCategorySection.DEALS)
                     .map(category -> new Deal(null, 10, category))
                     .toList();
+            createdDeals = dealRepository.saveAll(deals);
+
         } else {
             createdDeals = dealRepository.findAll();
         }

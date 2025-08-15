@@ -25,7 +25,7 @@ public class JwtProvider {
         Date now = new Date();
         return Jwts.builder()
                 .issuedAt(now)
-                .expiration(new Date(now.getTime() + 1000 * 60 * 60)) // 1 hour expiry
+                .expiration(new Date(now.getTime() + 1000L * 60 * 60 * 24))
                 .claim("email", auth.getName())
                 .claim("authorities", roles)
                 .signWith(key)
@@ -34,6 +34,9 @@ public class JwtProvider {
     }
 
     public String getEmailFromJwtToken(String jwt) {
+        if (jwt == null || !jwt.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Invalid or missing Authorization header");
+        }
         jwt = jwt.substring(7);
         Claims claims = Jwts.parser()
                 .verifyWith(key)

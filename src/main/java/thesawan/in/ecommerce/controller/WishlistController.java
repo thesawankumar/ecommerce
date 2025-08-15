@@ -18,7 +18,7 @@ public class WishlistController {
     private final UserService userService;
     private final ProductService productService;
 
-    @GetMapping("/getWishlist")
+    @GetMapping("/get-wishlist")
     public ResponseEntity<Wishlist> getWishlistByUserId(@RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserByJwtToken(jwt);
         Wishlist wishlist = wishlistService.getWishlistByUserId(user);

@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/seller/order")
 public class SellerOrderController {
+
     private final OrderService orderService;
     private final SellerService sellerService;
 
@@ -26,6 +27,8 @@ public class SellerOrderController {
         List<Order> orders = orderService.sellerOrders(seller.getId());
         return new ResponseEntity<>(orders, HttpStatus.ACCEPTED);
     }
+
+    @PatchMapping("/{orderId}/update-status/{orderStatus}")
     public ResponseEntity<Order> updateOrderStatus(@RequestHeader("Authorization") String jwt,
                                                    @PathVariable Long orderId,
                                                    @PathVariable OrderStatus orderStatus) throws Exception {
@@ -34,4 +37,20 @@ public class SellerOrderController {
         Order order = orderService.updateOrderStatus(orderId, orderStatus);
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
     }
+
+    @DeleteMapping("/{orderId}/delete")
+    public ResponseEntity<String> deleteOrder(
+            @RequestHeader("Authorization") String jwt,
+            @PathVariable Long orderId) throws Exception {
+
+        // ✅ Validate seller JWT token
+        Seller seller = sellerService.getSellerProfile(jwt);
+
+        // ✅ Delete the order
+        orderService.deleteOrderBySeller(orderId, seller.getId());
+
+        return new ResponseEntity<>("Order deleted successfully", HttpStatus.OK);
+    }
+
+
 }

@@ -22,7 +22,7 @@ public class PaymentController {
 
     @GetMapping("/success/{paymentId}")
     public ResponseEntity<ApiResponse> paymentSuccessHandler(@PathVariable String paymentId,
-                                                             @PathVariable String paymentLinkId,
+                                                             @RequestParam String paymentLinkId,
                                                              @RequestHeader("Authorization") String jwt) throws Exception {
 
         User user = userService.findUserByJwtToken(jwt);

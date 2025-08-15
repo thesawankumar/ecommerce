@@ -110,4 +110,17 @@ public class OrderServiceImpl implements OrderService {
         return orderItemRepository.findById(id)
                 .orElseThrow(() -> new Exception("Order item not found with id: " + id));
     }
+
+    @Override
+    public void deleteOrderBySeller(Long orderId, Long sellerId) throws Exception {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new Exception("Order not found"));
+
+        if (!order.getId().equals(sellerId)) {
+            throw new Exception("You are not authorized to delete this order");
+        }
+
+        orderRepository.delete(order);
+    }
+
 }

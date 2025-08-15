@@ -6,8 +6,7 @@ import thesawan.in.ecommerce.domain.AccountStatus;
 import thesawan.in.ecommerce.domain.USER_ROLE;
 
 @Entity
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
