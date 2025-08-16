@@ -1,6 +1,7 @@
 package thesawan.in.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import thesawan.in.ecommerce.domain.USER_ROLE;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,7 +29,8 @@ public class User {
     private String mobile;
     private USER_ROLE role = USER_ROLE.ROLE_CUSTOMER;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses = new HashSet<>();
+    @JsonManagedReference
+    private List<Address> addresses = new ArrayList<>();
     @ManyToMany
     @JsonIgnore
     private Set<Coupon> usedCoupons = new HashSet<>();

@@ -1,5 +1,6 @@
 package thesawan.in.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,7 +24,7 @@ public class Address {
     private String pinCode;
     private String mobile;
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference
     private User user;
 
 }
