@@ -27,6 +27,9 @@ public class AppConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(request -> request
+                        // ✅ Swagger + OpenAPI endpoints allow
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        // ✅ Existing rules
                         .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/api/products/*/reviews").permitAll()
                         .anyRequest().permitAll())
@@ -61,6 +64,7 @@ public class AppConfig {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
