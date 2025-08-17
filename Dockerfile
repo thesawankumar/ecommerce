@@ -1,4 +1,4 @@
-# ---------- Build Backend ----------
+# ---------- Build Stage ----------
 FROM openjdk:17-jdk-slim AS build
 WORKDIR /app
 COPY ./ ./
