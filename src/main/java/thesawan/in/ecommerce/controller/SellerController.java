@@ -88,7 +88,8 @@ public class SellerController {
 
     @PatchMapping("/update-profile")
     public ResponseEntity<Seller> updateSellerProfile(@RequestHeader("Authorization") String jwt, @RequestBody Seller seller) throws Exception {
-        Seller profile = sellerService.getSellerProfile(jwt);
+        String email = jwtProvider.getEmailFromJwtToken(jwt);
+        Seller profile = sellerService.getSellerByEmail(email);
         Seller updatedSeller = sellerService.updateSellerProfile(profile.getId(), seller);
         return new ResponseEntity<>(updatedSeller, HttpStatus.OK);
     }
