@@ -1,0 +1,40 @@
+#version: '3.8'
+#
+#services:
+#  mysql:
+#    image: mysql:8.0
+#    container_name: mysql
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 1234
+#      MYSQL_DATABASE: ecommerce_app
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: 1234
+#    ports:
+#      - "3306:3306"
+#    volumes:
+#      - mysql-data:/var/lib/mysql
+#    networks:
+#      - app-network
+#
+#  springboot-app:
+#    build: .
+#    container_name: ecommerce-app
+#    depends_on:
+#      - mysql
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/ecommerce_app
+#      SPRING_DATASOURCE_USERNAME: ecommerce_app
+#      SPRING_DATASOURCE_PASSWORD: 1234
+#      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+#    networks:
+#      - app-network
+#    restart: unless-stopped
+#
+#volumes:
+#  mysql-data:
+#
+#networks:
+#  app-network:
+#    driver: bridge
