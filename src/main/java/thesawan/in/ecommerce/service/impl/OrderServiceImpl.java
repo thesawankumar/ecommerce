@@ -141,16 +141,28 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
+//    @Override
+//    public Order cancelOrder(Long orderId, User user) throws Exception {
+//        Order order = findOrderById(orderId);
+//        if (user.getId().equals(order.getUser().getId())) {
+//            throw new Exception("You are not authorized to cancel this order");
+//        }
+//        order.setOrderStatus(OrderStatus.CANCELLED);
+//        return orderRepository.save(order);
+//    }
+
     @Override
     public Order cancelOrder(Long orderId, User user) throws Exception {
         Order order = findOrderById(orderId);
-        if (user.getId().equals(order.getUser().getId())) {
+
+        // ✅ Only allow the order's owner to cancel
+        if (!user.getId().equals(order.getUser().getId())) {
             throw new Exception("You are not authorized to cancel this order");
         }
+
         order.setOrderStatus(OrderStatus.CANCELLED);
         return orderRepository.save(order);
     }
-
     @Override
     public OrderItem findOrderItemById(Long id) throws Exception {
         return orderItemRepository.findById(id)
