@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import thesawan.in.ecommerce.domain.AccountStatus;
 import thesawan.in.ecommerce.model.Seller;
+import thesawan.in.ecommerce.response.AdminProfileResponse;
+import thesawan.in.ecommerce.service.AdminService;
 import thesawan.in.ecommerce.service.SellerService;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
     private final SellerService sellerService;
+    private final AdminService adminService;
 
     @PatchMapping("/seller/{id}/update-status/{status}")
     public ResponseEntity<Seller> updateSellerStatus(@PathVariable Long id, @PathVariable AccountStatus status) throws Exception {
@@ -28,5 +31,12 @@ public class AdminController {
     ) {
         List<Seller> sellers = sellerService.getAllSellers(status);
         return new ResponseEntity<>(sellers, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/dashboard")
+    public ResponseEntity<AdminProfileResponse> getAdminProfile() {
+        AdminProfileResponse response = adminService.getAdminDashboardStats();
+        return ResponseEntity.ok(response);
     }
 }
