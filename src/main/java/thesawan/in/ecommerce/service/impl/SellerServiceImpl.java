@@ -32,6 +32,29 @@ public class SellerServiceImpl implements SellerService {
         return this.getSellerByEmail(email);
     }
 
+//    @Override
+//    public Seller createSellerProfile(Seller seller) throws Exception {
+//        Seller sellerIsExist = sellerRepository.findByEmail(seller.getEmail());
+//        if (sellerIsExist != null) {
+//            throw new Exception("Seller already exists with email: " + seller.getEmail());
+//        }
+//
+//        Address savedAddress = addressRepository.save(seller.getPickupAddress());
+//        Seller newSeller = new Seller();
+//        newSeller.setEmail(seller.getEmail());
+//        newSeller.setPassword(seller.getPassword());
+//        newSeller.setSellerName(seller.getSellerName());
+//        newSeller.setPickupAddress(savedAddress);
+//        newSeller.setGSTIN(seller.getGSTIN());
+
+    /// /        System.out.println(seller.getRole());
+//        newSeller.setRole(USER_ROLE.ROLE_SELLER);
+//        newSeller.setMobile(seller.getMobile());
+//        newSeller.setBankDetails(seller.getBankDetails());
+//        newSeller.setBusinessDetails(seller.getBusinessDetails());
+//
+//        return sellerRepository.save(newSeller);
+//    }
     @Override
     public Seller createSellerProfile(Seller seller) throws Exception {
         Seller sellerIsExist = sellerRepository.findByEmail(seller.getEmail());
@@ -39,14 +62,12 @@ public class SellerServiceImpl implements SellerService {
             throw new Exception("Seller already exists with email: " + seller.getEmail());
         }
 
-        Address savedAddress = addressRepository.save(seller.getPickupAddress());
         Seller newSeller = new Seller();
         newSeller.setEmail(seller.getEmail());
         newSeller.setPassword(seller.getPassword());
         newSeller.setSellerName(seller.getSellerName());
-        newSeller.setPickupAddress(savedAddress);
+        newSeller.setPickupAddress(seller.getPickupAddress()); // cascade will save
         newSeller.setGSTIN(seller.getGSTIN());
-//        System.out.println(seller.getRole());
         newSeller.setRole(USER_ROLE.ROLE_SELLER);
         newSeller.setMobile(seller.getMobile());
         newSeller.setBankDetails(seller.getBankDetails());
