@@ -32,7 +32,7 @@ public class SwaggerConfig {
                 )
                 .servers(List.of(
                         new Server().url("http://localhost:8080").description("Local Development Server"),
-                        new Server().url("https://ecommerce-app-1-q5hv.onrender.com").description("Production Server")
+                        new Server().url("https://ecommerce-app-1-auw2.onrender.com").description("Production Server")
                 ));
     }
 }
