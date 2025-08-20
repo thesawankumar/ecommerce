@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import thesawan.in.ecommerce.filter.JwtTokenValidator;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -44,7 +45,7 @@ public class AppConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
-                cfg.setAllowedOrigins(Collections.singletonList("https://clever-fudge-0ef65b.netlify.app"));
+                cfg.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://clever-fudge-0ef65b.netlify.app"));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
