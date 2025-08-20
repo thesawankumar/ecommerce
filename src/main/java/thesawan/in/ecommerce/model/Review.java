@@ -25,6 +25,11 @@ public class Review {
     @Column(nullable = false)
     private double rating;
     @ElementCollection
+    @CollectionTable(
+            name = "review_images",
+            joinColumns = @JoinColumn(name = "review_id")
+    )
+    @Column(name = "image")
     private List<String> productImages;
 
     @JsonIgnore

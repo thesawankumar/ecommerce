@@ -19,7 +19,7 @@ import javax.xml.transform.sax.SAXResult;
 @EqualsAndHashCode
 public class HomeCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

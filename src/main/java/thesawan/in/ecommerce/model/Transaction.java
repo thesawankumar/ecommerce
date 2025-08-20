@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private User customer;
