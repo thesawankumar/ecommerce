@@ -35,6 +35,9 @@ public class PaymentServiceImpl implements PaymentService {
     private String apiKey;
     @Value("${razorpay.api.secret}")
     private String apiSecret;
+
+    @Value("${FRONTEND_URL_PROD:https:/moonlit-malabi-c3f48e.netlify.app/}")
+    private String prodFrontend;
 //    private String stripeSecretKey;
 
     @Override
@@ -107,7 +110,8 @@ public class PaymentServiceImpl implements PaymentService {
             notify.put("email", true);
             paymentLinkRequest.put("notify", notify);
 
-            paymentLinkRequest.put("callback_url", "http://localhost:5173/payment-success/" + orderId);
+//            paymentLinkRequest.put("callback_url", "prodFrontend/payment-success/" + orderId);
+            paymentLinkRequest.put("callback_url", prodFrontend + "/payment-success/" + orderId);
             paymentLinkRequest.put("callback_method", "get");
 
             PaymentLink paymentLink = razorpay.paymentLink.create(paymentLinkRequest);

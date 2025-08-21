@@ -1,6 +1,7 @@
 package thesawan.in.ecommerce.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,12 @@ import java.util.Collections;
 @EnableWebSecurity
 public class AppConfig {
 
+
+    @Value("${FRONTEND_URL_LOCAL:http://localhost:5173}")
+    private String localFrontend;
+
+    @Value("${FRONTEND_URL_PROD:https:/moonlit-malabi-c3f48e.netlify.app/}")
+    private String prodFrontend;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -45,7 +52,8 @@ public class AppConfig {
             @Override
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
-                cfg.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://clever-fudge-0ef65b.netlify.app"));
+//                cfg.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://clever-fudge-0ef65b.netlify.app"));
+                cfg.setAllowedOrigins(Arrays.asList(localFrontend,prodFrontend));
                 cfg.setAllowedMethods(Collections.singletonList("*"));
                 cfg.setAllowedHeaders(Collections.singletonList("*"));
                 cfg.setAllowCredentials(true);
